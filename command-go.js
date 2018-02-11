@@ -2,14 +2,14 @@ const os = require('os')
 const path = require('path')
 const fs = require('pn/fs')
 const {spawn} = require('pn/child_process')
+const glob = require('./glob')
 
 const axios = require('axios')
 const Jimp = require('jimp')
 const randstring = require('randomstring')
 const pick = require('./pick')
-
+const log = require('./log')
 const Storage = require('@google-cloud/storage')
-const bucket = new Storage().bucket(process.env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME)
 
 // Download image
 // Process image
@@ -24,7 +24,7 @@ module.exports = async function go(message, args) {
   ])
 
   if (!text.length) {
-    return await message.channel.send(`Jaybot at your service. ${img}`)
+    return await message.channel.send(log.channel(img))
   }
 
   // Initialize file names
@@ -39,23 +39,35 @@ module.exports = async function go(message, args) {
 
   // Convert files
   // <Buffer> -> <String> (Base64)
-  const image = await process(init, input, output, text)
+  const image = await convert(init, input, output, text)
 
   // Upload file
+  const bucket = new Storage().bucket(process.env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME)
   await bucket.upload(output)
   // Publicize file
   await bucket.file(outputName).makePublic()
 
   // Send
   const link = `https://storage.googleapis.com/${process.env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME}/${outputName}`
-  await message.channel.send(`Jaybot at your service. ${link}`)
+  await message.channel.send(log.channel(link))
 
   // Clean up
-  await fs.unlink(input)
-  await fs.unlink(output)
+  await cleanup()
 }
 
-async function process(base, input, output, text) {
+async function cleanup() {
+  const pattern = path.resolve(os.tmpdir(),'jaybot-*')
+
+  const files = await glob(pattern)
+
+  files.forEach((file) => {
+    if (fs.exists(file)) {
+      fs.unlink(file)
+    }
+  })
+}
+
+async function convert(base, input, output, text) {
   const img = await Jimp.read(base)
 
   const svg = new Buffer(`

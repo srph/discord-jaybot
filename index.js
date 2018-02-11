@@ -32,6 +32,7 @@ client.on('message', async message => {
   switch(job) {
     case 'go':
       try {
+        console.log(process.env)
         await go(message, args)
       } catch(e) {
         console.log(e)
