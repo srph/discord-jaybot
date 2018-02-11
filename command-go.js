@@ -1,3 +1,5 @@
+const pick = require('./pick')
+
 module.exports = function go(message, args) {
   const img = pick([
     'https://imgur.com/a/hE2Ra',
