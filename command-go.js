@@ -8,6 +8,9 @@ const Jimp = require('jimp')
 const randstring = require('randomstring')
 const pick = require('./pick')
 
+const Storage = require('@google-cloud/storage')
+const bucket = new Storage().bucket('kierb-discord-jaybot')
+
 // Download image
 // Process image
 module.exports = async function go(message, args) {
@@ -20,10 +23,15 @@ module.exports = async function go(message, args) {
     'https://i.imgur.com/jLJxioL.jpg'
   ])
 
+  if (!text.length) {
+    return await message.channel.send(`Jaybot at your service. ${img}`)
+  }
+
   // Initialize file names
   const fn = `jaybot-${randstring.generate()}`
   const input = path.resolve(os.tmpdir(), `${fn}.svg`)
-  const output = path.resolve(os.tmpdir(), `${fn}.png`)
+  const outputName = `${fn}.png`
+  const output = path.resolve(os.tmpdir(), outputName)
 
   // Download
   // https://i.imgur.com/DySQW0P.jpg -> <Buffer>
@@ -34,11 +42,17 @@ module.exports = async function go(message, args) {
   const image = await process(init, input, output, text)
 
   // Upload file
-  const res = await axios.post('https://api.imgur.com/3/image', { image }, {
-    headers: { Authorization: `Bearer d254cee514e8b417d70fcb7f55863f7760533101`, }
-  })
+  await bucket.upload(output)
+  // Publicize file
+  await bucket.file(outputName).makePublic()
 
-  await message.channel.send(`Jaybot at your service. ${res.data.data.link}`)
+  // Send
+  const link = `https://storage.googleapis.com/kierb-discord-jaybot/${outputName}`
+  await message.channel.send(`Jaybot at your service. ${link}`)
+
+  // Clean up
+  await fs.unlink(input)
+  await fs.unlink(output)
 }
 
 async function process(base, input, output, text) {
