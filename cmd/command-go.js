@@ -20,7 +20,9 @@ module.exports = async function go(message, args) {
     'https://i.imgur.com/DySQW0P.jpg',
     'https://i.imgur.com/ta4ZI8I.jpg',
     'https://i.imgur.com/J0gndRO.jpg',
-    'https://i.imgur.com/jLJxioL.jpg'
+    'https://i.imgur.com/jLJxioL.jpg',
+    'https://i.imgur.com/BwCYsZu.jpg',
+    'https://i.imgur.com/IAMtR3R.jpg'
   ])
 
   if (!text.length) {
