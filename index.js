@@ -3,11 +3,10 @@ require('dotenv').load()
 const Discord = require('discord.js')
 const client = new Discord.Client()
 
-const ellipsis = require('./ellipsis')
-const log = require('./log')
-const go = require('./command-go')
-const help = require('./command-help')
-const util = require('util')
+const ellipsis = require('./utils/ellipsis')
+const log = require('./utils/log')
+const go = require('./cmd/command-go')
+const help = require('./cmd/command-help')
 
 client.on('ready', () => {
   log('Connected to discord...')
@@ -32,7 +31,6 @@ client.on('message', async message => {
   switch(job) {
     case 'go':
       try {
-        console.log(process.env)
         await go(message, args)
       } catch(e) {
         console.log(e)

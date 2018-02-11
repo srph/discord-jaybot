@@ -2,13 +2,13 @@ const os = require('os')
 const path = require('path')
 const fs = require('pn/fs')
 const {spawn} = require('pn/child_process')
-const glob = require('./glob')
+const glob = require('../utils/glob')
 
 const axios = require('axios')
 const Jimp = require('jimp')
 const randstring = require('randomstring')
-const pick = require('./pick')
-const log = require('./log')
+const pick = require('../utils/pick')
+const log = require('../utils/log')
 const Storage = require('@google-cloud/storage')
 
 // Download image

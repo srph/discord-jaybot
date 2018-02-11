@@ -1,4 +1,4 @@
-const log = require('./log')
+const log = require('../utils/log')
 
 module.exports = function help(message) {
   message.channel.send(log.channel(`Usage:
