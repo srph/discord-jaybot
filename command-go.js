@@ -9,7 +9,7 @@ const randstring = require('randomstring')
 const pick = require('./pick')
 
 const Storage = require('@google-cloud/storage')
-const bucket = new Storage().bucket('kierb-discord-jaybot')
+const bucket = new Storage().bucket(process.env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME)
 
 // Download image
 // Process image
@@ -47,7 +47,7 @@ module.exports = async function go(message, args) {
   await bucket.file(outputName).makePublic()
 
   // Send
-  const link = `https://storage.googleapis.com/kierb-discord-jaybot/${outputName}`
+  const link = `https://storage.googleapis.com/${process.env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME}/${outputName}`
   await message.channel.send(`Jaybot at your service. ${link}`)
 
   // Clean up
