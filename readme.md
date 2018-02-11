@@ -1,6 +1,11 @@
 ## discord-jaybot
 Post random fancy photos of the one and only Jayson.
 
+## Commands
+- `!jaybot` &mdash; Help
+- `!jaybot go` &mdash; Pick and post a random photo of Jayson
+- `!jaybot go hello` &mdash; Pick and post a random photo of Jayson, with "hello" text
+
 ## Setup
 Requires Node `>v7.10` & npm `>=v5`.
 
