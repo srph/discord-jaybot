@@ -16,7 +16,8 @@ module.exports = async function go(message, args) {
   const img = pick([
     'https://i.imgur.com/DySQW0P.jpg',
     'https://i.imgur.com/ta4ZI8I.jpg',
-    'https://i.imgur.com/J0gndRO.jpg'
+    'https://i.imgur.com/J0gndRO.jpg',
+    'https://i.imgur.com/jLJxioL.jpg'
   ])
 
   // Initialize file names
