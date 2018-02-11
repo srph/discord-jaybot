@@ -1,5 +1,8 @@
+require('dotenv').load()
+
 const Discord = require('discord.js')
 const client = new Discord.Client()
+
 const ellipsis = require('./ellipsis')
 const log = require('./log')
 const pick = require('./pick')
@@ -36,4 +39,4 @@ client.on('message', async message => {
   }
 })
 
-client.login('NDEyMDI1NDY1ODIyMzgwMDQy.DWEStA.EACbZQ3l3kF0hr7Usmb9BrDP-_s')
+client.login(process.env.DISCORD_BOT_TOKEN)
