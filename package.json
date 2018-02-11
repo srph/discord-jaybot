@@ -6,11 +6,27 @@
   "scripts": {
     "start": "node index.js"
   },
-  "keywords": ["discord", "bot"],
+  "keywords": [
+    "discord",
+    "bot"
+  ],
   "author": "Kier Borromeo",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.17.1",
+    "convert-svg-core": "^0.4.0",
+    "convert-svg-test-helper": "^0.4.0",
+    "convert-svg-to-png": "^0.4.0",
     "discord.js": "^11.3.0",
-    "dotenv": "^5.0.0"
+    "dotenv": "^5.0.0",
+    "form-data": "^2.3.1",
+    "gm": "^1.23.1",
+    "jimp": "^0.2.28",
+    "pn": "^1.1.0",
+    "randomstring": "^1.1.5",
+    "rimraf": "^2.6.2",
+    "svg-to-png": "^3.1.2",
+    "svg2png": "^4.1.1",
+    "svgexport": "^0.3.2"
   }
 }

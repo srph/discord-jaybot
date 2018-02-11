@@ -5,9 +5,9 @@ const client = new Discord.Client()
 
 const ellipsis = require('./ellipsis')
 const log = require('./log')
-const pick = require('./pick')
 const go = require('./command-go')
 const help = require('./command-help')
+const util = require('util')
 
 client.on('ready', () => {
   log('Connected to discord...')
@@ -21,7 +21,7 @@ client.on('message', async message => {
   const args = message.content.trim().split(/ +/g)
   const command = args.length ? args.shift().toLowerCase() : ''
 
-  if (command !== 'jaybot') {
+  if (command !== '!jaybot') {
     return
   }
 
@@ -31,7 +31,11 @@ client.on('message', async message => {
 
   switch(job) {
     case 'go':
-      go(message, args)
+      try {
+        await go(message, args)
+      } catch(e) {
+        console.log(e)
+      }
       break
     default:
       help(message)
