@@ -18,3 +18,10 @@ Requires Node `>v7.10` & npm `>=v5`.
   - Setup [Google Cloud Storage](https://www.npmjs.com/package/@google-cloud/storage#before-you-begin).
   - Set `GOOGLE_APPLICATION_CREDENTIALS` to the path to your GCS configuration.
 - Start the bot with `npm start`.
+
+## Overengineered what?
+I know, I know. I built this for fun, but I don't want my friend's privacy to suffer. So instead of a static list of photos / urls (which I uploaded to Imgur, initially), I've made things configurable.
+
+Since it's there, I added an image optimization to the mix. I also had some issues with Imgur's API, so I went ahead and switched to Google Cloud Storage since it's free.
+
+Ugh - don't be like me. Anyway, I love my friends so much I'm willing to use my free day to build rad shit like this.

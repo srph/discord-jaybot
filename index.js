@@ -5,41 +5,57 @@ const client = new Discord.Client()
 
 const ellipsis = require('./utils/ellipsis')
 const log = require('./utils/log')
+
+const dump = require('./dump')
 const go = require('./cmd/command-go')
 const help = require('./cmd/command-help')
 
-client.on('ready', () => {
-  log('Connected to discord...')
-})
-
-client.on('message', async message => {
-  if (message.author.bot) {
-    return
+async function main() {
+  try {
+    await dump()
+  } catch(e) {
+    log('An error occurred while trying to dump.')
+    console.log(e)
+    process.exit(0)
   }
 
-  const args = message.content.trim().split(/ +/g)
-  const command = args.length ? args.shift().toLowerCase() : ''
+  log('The photos were successfully dumped')
 
-  if (command !== '!jaybot') {
-    return
-  }
+  client.on('ready', () => {
+    log('Connected to discord...')
+  })
 
-  log(`Received from ${message.author.username} - ${ellipsis(message.content)}`)
+  client.on('message', async message => {
+    if (message.author.bot) {
+      return
+    }
 
-  const job = args.length ? args.shift().toLowerCase() : ''
+    const args = message.content.trim().split(/ +/g)
+    const command = args.length ? args.shift().toLowerCase() : ''
 
-  switch(job) {
-    case 'go':
-      try {
-        await go(message, args)
-      } catch(e) {
-        console.log(e)
-      }
-      break
-    default:
-      help(message)
-      break
-  }
-})
+    if (command !== '!jaybot') {
+      return
+    }
 
-client.login(process.env.DISCORD_BOT_TOKEN)
+    log(`Received from ${message.author.username} - ${ellipsis(message.content)}`)
+
+    const job = args.length ? args.shift().toLowerCase() : ''
+
+    switch(job) {
+      case 'go':
+        try {
+          await go(message, args)
+        } catch(e) {
+          console.log(e)
+        }
+        break
+      default:
+        help(message)
+        break
+    }
+  })
+
+  client.login(process.env.DISCORD_BOT_TOKEN)
+}
+
+main()

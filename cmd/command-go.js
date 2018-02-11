@@ -9,24 +9,24 @@ const Jimp = require('jimp')
 const randstring = require('randomstring')
 const pick = require('../utils/pick')
 const log = require('../utils/log')
-const Storage = require('@google-cloud/storage')
+const bucket = require('../bucket')
+const gcs = require('../utils/gcs')
 
 // Download image
 // Process image
 module.exports = async function go(message, args) {
   const text = args.join(' ').trim()
 
-  const img = pick([
-    'https://i.imgur.com/DySQW0P.jpg',
-    'https://i.imgur.com/ta4ZI8I.jpg',
-    'https://i.imgur.com/J0gndRO.jpg',
-    'https://i.imgur.com/jLJxioL.jpg',
-    'https://i.imgur.com/BwCYsZu.jpg',
-    'https://i.imgur.com/IAMtR3R.jpg'
-  ])
+  const img = pick(await glob(
+    path.resolve(__dirname, '..', 'imgdump', '*')
+  ))
 
   if (!text.length) {
-    return await message.channel.send(log.channel(img))
+    await message.channel.send(log.channel(
+      gcs.public(path.join(process.env.GOOGLE_CLOUD_STORAGE_SOURCE_DIR, path.basename(img)))
+    ))
+
+    return
   }
 
   // Initialize file names
@@ -35,23 +35,19 @@ module.exports = async function go(message, args) {
   const outputName = `${fn}.png`
   const output = path.resolve(os.tmpdir(), outputName)
 
-  // Download
-  // https://i.imgur.com/DySQW0P.jpg -> <Buffer>
-  const init = await download(img)
-
   // Convert files
   // <Buffer> -> <String> (Base64)
-  const image = await convert(init, input, output, text)
+  const image = text.length
+    ? await convert(await fs.readFile(img), input, output, text)
+    : await fs.readFile(img)
 
   // Upload file
-  const bucket = new Storage().bucket(process.env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME)
   await bucket.upload(output)
   // Publicize file
   await bucket.file(outputName).makePublic()
 
   // Send
-  const link = `https://storage.googleapis.com/${process.env.GOOGLE_CLOUD_STORAGE_BUCKET_NAME}/${outputName}`
-  await message.channel.send(log.channel(link))
+  await message.channel.send(log.channel(gcs.public(outputName)))
 
   // Clean up
   await cleanup()
@@ -84,11 +80,6 @@ async function convert(base, input, output, text) {
   await next()
   const png = await fs.readFile(output)
   return png.toString('base64')
-}
-
-async function download(url) {
-  const res = await axios.get(url, { responseType: 'arraybuffer'})
-  return Buffer.from(res.data)
 }
 
 async function next() {
