@@ -42,16 +42,19 @@ async function main() {
     const job = args.length ? args.shift().toLowerCase() : ''
 
     switch(job) {
-      case 'go':
+      case 'go': {
         try {
           await go(message, args)
         } catch(e) {
           console.log(e)
         }
         break
-      default:
+      }
+
+      default: {
         help(message)
         break
+      }
     }
   })
 
