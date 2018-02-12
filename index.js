@@ -15,7 +15,7 @@ async function main() {
     await dump()
   } catch(e) {
     log('An error occurred while trying to dump.')
-    console.log(e)
+    console.log(e.stack)
     process.exit(0)
   }
 
