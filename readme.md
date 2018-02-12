@@ -1,7 +1,7 @@
 ## discord-jaybot
 Discord bot that posts random fancy photos of the one and only Jayson.
 
-![Preview](preview.JPG)
+![Preview](preview.PNG)
 
 ## Commands
 - `!jaybot` &mdash; Help
