@@ -3,6 +3,7 @@ const path = require('path')
 const fs = require('pn/fs')
 const {spawn} = require('pn/child_process')
 const glob = require('../utils/glob')
+const rimraf = require('../utils/rimraf')
 
 const axios = require('axios')
 const Jimp = require('jimp')
@@ -50,19 +51,7 @@ module.exports = async function go(message, args) {
   await message.channel.send(log.channel(gcs.public(outputName)))
 
   // Clean up
-  await cleanup()
-}
-
-async function cleanup() {
-  const pattern = path.resolve(os.tmpdir(),'jaybot-*')
-
-  const files = await glob(pattern)
-
-  files.forEach((file) => {
-    if (fs.exists(file)) {
-      fs.unlink(file)
-    }
-  })
+  await rimraf(path.resolve(os.tmpdir(),'jaybot-*'))
 }
 
 async function convert(base, input, output, text) {
