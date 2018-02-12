@@ -15,6 +15,8 @@ Requires Node `>v7.10` & npm `>=v5`.
   - Set `DISCORD_BOT_TOKEN` to your bot's token.
   - Create a [Google Cloud Storage](https://cloud.google.com/storage/) bucket.
   - Set `GOOGLE_CLOUD_STORAGE_BUCKET_NAME` to your GCS bucket name.
+  - Setup a new folder inside your bucket. The photos will be uploaded here. Don't forget to make the uploaded files public.
+  - Set `GOOGLE_CLOUD_STORAGE_SOURCE_DIR` to the created folder.
   - Setup [Google Cloud Storage](https://www.npmjs.com/package/@google-cloud/storage#before-you-begin).
   - Set `GOOGLE_APPLICATION_CREDENTIALS` to the path to your GCS configuration.
 - Start the bot with `npm start`.
