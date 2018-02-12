@@ -1,6 +1,8 @@
 ## discord-jaybot
 Post random fancy photos of the one and only Jayson.
 
+![Preview](preview.JPG)
+
 ## Commands
 - `!jaybot` &mdash; Help
 - `!jaybot go` &mdash; Pick and post a random photo of Jayson
