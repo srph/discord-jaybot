@@ -1,5 +1,5 @@
 ## discord-jaybot
-Post random fancy photos of the one and only Jayson.
+Discord bot that posts random fancy photos of the one and only Jayson.
 
 ![Preview](preview.JPG)
 
@@ -34,4 +34,4 @@ I know, I know. I built this for fun, but I don't want my friend's privacy to su
 
 Since it's there, I added an image optimization to the mix. I also had some issues with Imgur's API, so I went ahead and switched to Google Cloud Storage since it's free.
 
-Ugh - don't be like me. Anyway, I love my friends so much I'm willing to use my free day to build rad shit like this.
+Ugh - don't be like me. Anyway, I love my friends so much I'm willing to use my free day to build rad shit like this. All-in for the memes.
