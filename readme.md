@@ -7,7 +7,7 @@ Post random fancy photos of the one and only Jayson.
 - `!jaybot go hello` &mdash; Pick and post a random photo of Jayson, with "hello" text
 
 ## Setup
-Requires Node `>v7.10` & npm `>=v5`.
+Requires Node `>v7.10` & npm `>=v5` and GraphicsMagick `>=1.3`.
 
 - Clone the repository and run `npm install`.
 - Copy `.env.example` to `.env` and open up `.env`
