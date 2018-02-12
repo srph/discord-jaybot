@@ -21,6 +21,12 @@ Requires Node `>v7.10` & npm `>=v5` and GraphicsMagick `>=1.3`.
   - Set `GOOGLE_APPLICATION_CREDENTIALS` to the path to your GCS configuration.
 - Start the bot with `npm start`.
 
+## Deployment
+```js
+npm i -g forever
+forever node index.js
+```
+
 ## Overengineered what?
 I know, I know. I built this for fun, but I don't want my friend's privacy to suffer. So instead of a static list of photos / urls (which I uploaded to Imgur, initially), I've made things configurable.
 
